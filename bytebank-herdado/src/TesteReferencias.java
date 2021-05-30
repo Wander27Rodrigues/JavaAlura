@@ -13,7 +13,7 @@ public class TesteReferencias {
 		
 
 		Designer d = new Designer();
-		d.setSalario(2500.0);
+		d.setSalario(2000.0);
 		
 		ControleBonificacao controle = new ControleBonificacao();
 		controle.registra(g1);
