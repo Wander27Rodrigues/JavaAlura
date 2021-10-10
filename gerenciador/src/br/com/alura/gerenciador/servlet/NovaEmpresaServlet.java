@@ -22,8 +22,21 @@ public class NovaEmpresaServlet extends HttpServlet {
 		System.out.println("Cadastrando nova empresa");
 		
 		String nomeEmpresa = request.getParameter("nome");
+		String paraDataEmpresa = request.getParameter("data");
+		
+		
+		Date dataAbertura = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormt("dd/MM/yyyy");
+			dataAbertura = sdf.parse(paramDataEmpresa);
+		} catch (ParseExeption e) {
+			trow new SevletException(e);
+		}
+		
+						
 		Empresa empresa = new Empresa();
 		empresa.setNome(nomeEmpresa);
+		empresa.setDataAbertura(dataAbertura);
 		
 		Banco banco = new Banco();
 		banco.adiciona(empresa);
