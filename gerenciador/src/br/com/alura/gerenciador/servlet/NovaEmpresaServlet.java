@@ -1,7 +1,9 @@
 package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,29 +24,31 @@ public class NovaEmpresaServlet extends HttpServlet {
 		System.out.println("Cadastrando nova empresa");
 		
 		String nomeEmpresa = request.getParameter("nome");
-		String paraDataEmpresa = request.getParameter("data");
-		
+		String paramDataEmpresa = request.getParameter("data");
 		
 		Date dataAbertura = null;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormt("dd/MM/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			dataAbertura = sdf.parse(paramDataEmpresa);
-		} catch (ParseExeption e) {
-			trow new SevletException(e);
+		} catch (ParseException e) {
+			throw new ServletException(e);
 		}
 		
-						
 		Empresa empresa = new Empresa();
 		empresa.setNome(nomeEmpresa);
 		empresa.setDataAbertura(dataAbertura);
 		
 		Banco banco = new Banco();
 		banco.adiciona(empresa);
-	
-		//Chamar o JSP
-		RequestDispatcher rd = request.getResquestDispatcher("/novaEmpresaCriada.jsp");
-		resquest.setAtrribute("empresa", empresa.getNome());
-		rd.forward(resquest, response);
+		
+		request.setAttribute("empresa", empresa.getNome());
+		
+		response.sendRedirect("listaEmpresas");
+		
+//		//chamar o JSP ou Servlet
+//		RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas");
+//		request.setAttribute("empresa", empresa.getNome());
+//		rd.forward(request, response);
 	}
 
 }
